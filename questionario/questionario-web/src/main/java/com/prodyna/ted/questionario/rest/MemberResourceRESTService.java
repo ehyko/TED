@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.Column;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -49,7 +50,6 @@ import com.prodyna.ted.questionario.service.QuestionarioService;
  * <p/>
  * This class produces a RESTful service to read/write the contents of the members table.
  */
-@Path("/question")
 @RequestScoped
 public class MemberResourceRESTService {
     @Inject
@@ -64,28 +64,86 @@ public class MemberResourceRESTService {
     @Inject
     QuestionarioService registration;
 
+    @Path("/question")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Question> findAllQuestions() {
         return questionarioService.findAllQuestions();
-    }
+	}
+
+    @Path("/survey")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveSurveyAnswer(SurveyAnswer surveyAnswer) {
+    	for (com.prodyna.ted.questionario.rest.MemberResourceRESTService.SurveyAnswer.Answer a : surveyAnswer.getAnswers()) {
+    		Survey survey = new Survey();
+    		survey.setAnswerId(a.getId());
+    		survey.setQuestionId(a.getQuestionId());
+    		questionarioService.storeSurvey(survey);
+    	}
+	}
+
+	/**
+	 * Creates a new member from the values provided. Performs validation, and
+	 * will return a JAX-RS response with either 200 ok, or with a map of
+	 * fields, and related errors.
+	 */
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createMember(Survey survey) {
+
+		Response.ResponseBuilder builder = null;
+
+		builder = Response.ok();
+
+		return builder.build();
+	}
+	
+	private class SurveyAnswer {
+
+		private List<Answer> answers;
+
+		public List<Answer> getAnswers() {
+			return answers;
+		}
+
+		public void setAnswers(List<Answer> answers) {
+			this.answers = answers;
+		}
+
+		public SurveyAnswer() {
+		}
+		
+		private class Answer {
+
+			private long questionId;
+
+			private long id;
+
+			public Answer() {
+			}
+
+			public long getQuestionId() {
+				return questionId;
+			}
+
+			public void setQuestionId(long questionId) {
+				this.questionId = questionId;
+			}
+
+			public long getId() {
+				return id;
+			}
+
+			public void setId(long id) {
+				this.id = id;
+			}
+
+		}
 
 
-    /**
-     * Creates a new member from the values provided. Performs validation, and will return a JAX-RS response with either 200 ok,
-     * or with a map of fields, and related errors.
-     */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createMember(Survey survey) {
+	}
 
-        Response.ResponseBuilder builder = null;
-
-            builder = Response.ok();
-
-
-        return builder.build();
-    }
-
+	
 }
