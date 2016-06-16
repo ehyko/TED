@@ -17,18 +17,16 @@
 package com.prodyna.ted.questionario.service;
 
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.prodyna.ted.questionario.model.Answer;
 import com.prodyna.ted.questionario.model.Question;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
+import com.prodyna.ted.questionario.model.Survey;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
 @Stateless
@@ -44,6 +42,10 @@ public class QuestionarioService {
 		TypedQuery<Question> typedQuery = em.createNamedQuery(Question.QUERY_FIND_ALL, Question.class);
 		List<Question> resultList = typedQuery.getResultList();
 		return resultList;
+	}
+	
+	public void storeSurvey(Survey survey) {
+		// TODO
 	}
 
 
