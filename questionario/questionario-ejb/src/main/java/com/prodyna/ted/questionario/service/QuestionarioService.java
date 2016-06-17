@@ -45,7 +45,14 @@ public class QuestionarioService {
 	}
 	
 	public void storeSurvey(Survey survey) {
-		// TODO
+		em.persist(survey);
+	}
+
+	public void storeSurvey(List<Survey> surveys) {
+		for (Survey survey : surveys) {
+			em.persist(survey);
+		}
+		
 	}
 
 
