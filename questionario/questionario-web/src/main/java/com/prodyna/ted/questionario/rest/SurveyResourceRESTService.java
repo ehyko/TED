@@ -62,31 +62,31 @@ import com.prodyna.ted.questionario.service.QuestionarioService;
 /**
  * JAX-RS Example
  * <p/>
- * This class produces a RESTful service to read/write the contents of the members table.
+ * This class produces a RESTful service to read/write the contents of the
+ * members table.
  */
 @Path("/")
 @RequestScoped
 @LogInBinding
-//@Api(value = "/question", description = "REST aPI um die Umfrage zu managen")
 public class SurveyResourceRESTService {
-    @Inject
-    private Logger log;
 
-    @Inject
-    private Validator validator;
+	@Inject
+	private Logger log;
 
-    @Inject
-    private QuestionarioService questionarioService;
+	@Inject
+	private Validator validator;
 
     @Inject
     private QuestionarioService registration;
+
+	@Inject
+	private QuestionarioService questionarioService;
 
     @Path("question")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Question> findAllQuestions(@PathParam("token") String token) {
         return questionarioService.findAllQuestions();
-	}
     
 	@Path("question")
 	@PUT
@@ -101,11 +101,12 @@ public class SurveyResourceRESTService {
 	public Response updateQuestion(Question question) {
 		return questionarioService.updateQuestion(question) ? ok().build() : status(BAD_REQUEST).build();
 	}
-	
-    @Path("survey")
+
+	@Path("question")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveSurveyAnswer(@PathParam("token") String token, List<Survey> surveys) {
 		return questionarioService.storeSurvey(surveys) ? ok().build() : status(BAD_REQUEST).build();
 	}
+
 }
