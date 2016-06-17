@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 
 @NamedQueries({
-	@NamedQuery(name = User.QUERY_FIND_TOKEN, query = "SELECT u.id FROM User u WHERE u.token = :token")
+	@NamedQuery(name = User.QUERY_FIND_TOKEN, query = "SELECT u.id FROM User u WHERE u.token in :tokenList")
 })
 @Entity
 @Table(name = "user")

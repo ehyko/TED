@@ -27,6 +27,8 @@ import static javax.ws.rs.core.Response.Status.CREATED;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptor;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -38,6 +40,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.prodyna.ted.questionario.interceptor.LogInBinding;
+import com.prodyna.ted.questionario.interceptor.LogInInterceptor;
 import com.prodyna.ted.questionario.model.Question;
 import com.prodyna.ted.questionario.model.Survey;
 import com.prodyna.ted.questionario.service.QuestionarioService;
@@ -50,28 +53,29 @@ import com.prodyna.ted.questionario.service.QuestionarioService;
  */
 @Path("/")
 @RequestScoped
-@LogInBinding
+@Interceptors(value = { LogInInterceptor.class})
 public class SurveyResourceRESTService {
 
 	@Inject
 	private QuestionarioService questionarioService;
 
-    @Path("question")
+    @Path("survey")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Question> findAllQuestions(@QueryParam("token") String token) {
-        return questionarioService.findAllQuestions();
+    public Response findAllQuestions(@QueryParam("token") String token) {
+        List<Question> allQuestions = questionarioService.findAllQuestions();
+        return Response.ok(allQuestions).build();
     }
     
 	@Path("question")
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveQuestion(@QueryParam("token") String token, Question question) {
 		return questionarioService.storeQuestion(question) ? status(CREATED).build() : status(BAD_REQUEST).build();
 	}
 
 	@Path("question")
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateQuestion(@QueryParam("token") String token, Question question) {
 		return questionarioService.updateQuestion(question) ? ok().build() : status(BAD_REQUEST).build();
