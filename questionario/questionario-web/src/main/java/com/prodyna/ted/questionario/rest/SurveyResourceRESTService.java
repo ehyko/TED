@@ -54,6 +54,7 @@ import com.prodyna.ted.questionario.service.QuestionarioService;
 @Path("/")
 @RequestScoped
 @Interceptors(value = { LogInInterceptor.class})
+@Api(value = "/" )
 public class SurveyResourceRESTService {
 
 	@Inject

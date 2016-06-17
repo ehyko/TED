@@ -24,12 +24,13 @@
 		<class>com.prodyna.ted.questionario.model.Answer</class>
 		<class>com.prodyna.ted.questionario.model.Question</class>
 		<class>com.prodyna.ted.questionario.model.Survey</class>
+		<class>com.prodyna.ted.questionario.model.User</class>
 		
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 </persistence>
