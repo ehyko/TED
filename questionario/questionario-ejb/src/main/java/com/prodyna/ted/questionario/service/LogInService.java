@@ -1,5 +1,7 @@
 package com.prodyna.ted.questionario.service;
 
+import java.util.UUID;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,6 +29,18 @@ public class LogInService {
 			
 			throw new UserNotLoggedInException();
 		}
+	}
+
+	public User logIn(String email) {
+		
+		String token= UUID.randomUUID().toString();
+		User user = new User();
+		user.setEmail(email);
+		user.setToken(token);
+		
+		em.persist(user);
+		
+		return user;
 	}
 
 }

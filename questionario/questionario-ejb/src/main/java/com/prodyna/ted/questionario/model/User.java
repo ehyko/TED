@@ -28,8 +28,14 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id ;
 	
-	@Column
+	@Column(length = 128)
 	private String token;
+
+	@Column(length = 128)
+	private String email;
+	
+	@Column
+	private boolean admin;
 
 	public User() {
 	}
@@ -48,6 +54,22 @@ public class User implements Serializable{
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	
