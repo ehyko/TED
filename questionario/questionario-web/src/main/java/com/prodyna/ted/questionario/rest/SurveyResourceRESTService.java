@@ -57,7 +57,7 @@ import com.prodyna.ted.questionario.service.QuestionarioService;
 @Path("/")
 @RequestScoped
 //@Api(value = "/question", description = "REST aPI um die Umfrage zu managen")
-public class MemberResourceRESTService {
+public class SurveyResourceRESTService {
     @Inject
     private Logger log;
 
