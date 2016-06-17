@@ -21,10 +21,10 @@ import org.hibernate.annotations.FetchMode;
 
 @NamedQueries({ @NamedQuery(
         name = Question.QUERY_FIND_ALL,
-        query = "SELECT q FROM Question q"),
+        query = "SELECT q FROM Question q")
 })
 @Entity
-@Table(name = "Question")
+@Table(name = "question")
 public class Question implements Serializable{
 
 	private static final long serialVersionUID = -4383347524587592224L;
